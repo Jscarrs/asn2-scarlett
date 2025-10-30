@@ -5,7 +5,7 @@
  * No part of this assignment has been copied manually or electronically from any other source
  * (including web sites) or distributed to other students.
  *
- * Name: Scarlett Jet Student ID: N01675129 Date: ____________________
+ * Name: Scarlett Jet Student ID: N01675129 Date: October 29, 2025
  *
  *
  ******************************************************************************
@@ -82,6 +82,11 @@ app.engine(
           numPrice <= numMax
         );
       },
+      // Calculate record number across pages
+      getRecordNumber: (index, currentPage) => {
+        const recordsPerPage = 25;
+        return (currentPage - 1) * recordsPerPage + index + 1;
+      },
     },
   })
 );
@@ -102,8 +107,8 @@ try {
   const jsonData = JSON.parse(rawData);
 
   // Normalize keys (replace spaces with underscores + lowercase)
-  // Limit to 100 records for Vercel performance
-  airbnbData = jsonData.slice(0, 100).map((item) => {
+  // Load all 1000 records (changed from 100)
+  airbnbData = jsonData.map((item) => {
     const normalized = {};
     for (const key in item) {
       const cleanKey = key.trim().replace(/\s+/g, "_").toLowerCase();
@@ -176,14 +181,15 @@ app.get("/allData", (req, res) => {
 app.get("/allData/invoiceID/:index", (req, res) => {
   const index = parseInt(req.params.index);
 
-  if (isNaN(index) || index < 0 || index >= airbnbData.length) {
+  if (isNaN(index) || index < 1 || index > airbnbData.length) {
     return res.status(404).render("error", {
       title: "Error",
       message: "Invalid record index.",
     });
   }
 
-  const record = airbnbData[index];
+  // Subtract 1 since array is 0-indexed but display is 1-indexed
+  const record = airbnbData[index - 1];
   res.render("recordDetail", {
     title: "Listing Details",
     record,

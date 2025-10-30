@@ -17,9 +17,8 @@
     </thead>
     <tbody>
       {{#each data}}
-        {{!-- ✅ Step 10: Highlight rows with empty names --}}
         <tr {{#if (isEmptyName this.name)}}class="empty-name-row"{{/if}}>
-          <td>{{@index}}</td>
+          <td>{{getRecordNumber @index ../currentPage}}</td>
           <td>
             {{#if this.thumbnail}}
               <img src="{{this.thumbnail}}" alt="{{this.name}}" width="100" height="75" style="border-radius:6px;">
@@ -28,7 +27,6 @@
             {{/if}}
           </td>
           <td>{{this.id}}</td>
-          {{!-- ✅ Step 10: Use custom helper to display N/A for empty names --}}
           <td {{#if (isEmptyName this.name)}}class="empty-name-cell"{{/if}}>
             {{displayName this.name}}
           </td>
@@ -36,14 +34,13 @@
           <td>{{this.room_type}}</td>
           <td>{{formatPrice this.price}}</td>
           <td>
-            <a href="/allData/invoiceID/{{@index}}" class="view-link">View Details</a>
+            <a href="/allData/invoiceID/{{getRecordNumber @index ../currentPage}}" class="view-link">View Details</a>
           </td>
         </tr>
       {{/each}}
     </tbody>
   </table>
   
-  {{!-- Pagination --}}
   {{#if totalPages}}
     <div class="pagination">
       {{#if hasPrevPage}}
