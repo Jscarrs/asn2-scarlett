@@ -1,0 +1,50 @@
+<div class="content">
+  <h2>Clean Airbnb Listings (Step 9)</h2>
+  <p><strong>Only listings with a name are shown</strong> — Empty names filtered using Handlebars <code>#if</code> helper</p>
+  
+  {{#if data.length}}
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Thumbnail</th>
+          <th>Name</th>
+          <th>Neighbourhood</th>
+          <th>Room Type</th>
+          <th>Price</th>
+          <th>Host Name</th>
+          <th>Reviews / Month</th>
+          <th>Instant Bookable</th>
+          <th>Property Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data}}
+          {{!-- ✅ Step 9: Only show rows with non-empty names using #if helper --}}
+          {{#if this.name}}
+            <tr>
+              <td>{{@index}}</td>
+              <td>
+                {{#if this.thumbnail}}
+                  <img src="{{this.thumbnail}}" alt="{{this.name}}" width="120" onerror="this.src='/images/default.png'">
+                {{else}}
+                  <em>No image</em>
+                {{/if}}
+              </td>
+              <td>{{this.name}}</td>
+              <td>{{this.neighbourhood}}</td>
+              <td>{{this.room_type}}</td>
+              <td>{{formatPrice this.price}}</td>
+              <td><strong>{{this.host_name}}</strong></td>
+              <td>{{this.reviews_per_month}}</td>
+              <td>{{#if this.instant_bookable}}Yes{{else}}No{{/if}}</td>
+              <td>{{this.property_type}}</td>
+            </tr>
+          {{/if}}
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <p>No data found.</p>
+  {{/if}}
+</div>

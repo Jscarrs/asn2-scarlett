@@ -1,0 +1,39 @@
+<h2>{{title}}</h2>
+
+{{#if result}}
+  <div class="result-card">
+    <img src="{{result.thumbnail}}" alt="{{result.name}}" width="250" onerror="this.src='/images/default.png'">
+    <h3>{{result.name}}</h3>
+    <p><strong>Property ID:</strong> {{result.id}}</p>
+    <p><strong>Neighbourhood:</strong> {{result.neighbourhood}}</p>
+    <p><strong>Room Type:</strong> {{result.room_type}}</p>
+    <p><strong>Price:</strong> {{result.price}}</p>
+  </div>
+
+{{else if results.length}}
+  <ul class="result-list">
+    {{#each results}}
+      <li>
+        <img src="{{this.thumbnail}}" alt="{{this.name}}" width="150" onerror="this.src='/images/default.png'">
+        <strong>{{this.name}}</strong> (ID: {{this.id}}) — {{this.price}}
+      </li>
+    {{/each}}
+  </ul>
+
+{{else}}
+  <p>No matching results found.</p>
+{{/if}}
+
+<a href="{{backLink}}">⬅ New Search</a>
+
+{{#if totalPages}}
+  <div class="pagination">
+    {{#if hasPrevPage}}
+      <a href="?name={{name}}&page={{prevPage}}" class="page-link">⬅ Previous</a>
+    {{/if}}
+    <span>Page {{currentPage}} of {{totalPages}}</span>
+    {{#if hasNextPage}}
+      <a href="?name={{name}}&page={{nextPage}}" class="page-link">Next ➡</a>
+    {{/if}}
+  </div>
+{{/if}}

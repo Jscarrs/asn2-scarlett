@@ -1,0 +1,60 @@
+<h2>{{title}}</h2>
+<p>All Airbnb listings with pagination. <strong>Rows with empty names are highlighted in red and show "N/A".</strong></p>
+
+{{#if data.length}}
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Thumbnail</th>
+        <th>Property ID</th>
+        <th>Name</th>
+        <th>Neighbourhood</th>
+        <th>Room Type</th>
+        <th>Price</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data}}
+        {{!-- ✅ Step 10: Highlight rows with empty names --}}
+        <tr {{#if (isEmptyName this.name)}}class="empty-name-row"{{/if}}>
+          <td>{{@index}}</td>
+          <td>
+            {{#if this.thumbnail}}
+              <img src="{{this.thumbnail}}" alt="{{this.name}}" width="100" height="75" style="border-radius:6px;">
+            {{else}}
+              <img src="/images/default.png" alt="No Image" width="100" height="75" style="border-radius:6px;">
+            {{/if}}
+          </td>
+          <td>{{this.id}}</td>
+          {{!-- ✅ Step 10: Use custom helper to display N/A for empty names --}}
+          <td {{#if (isEmptyName this.name)}}class="empty-name-cell"{{/if}}>
+            {{displayName this.name}}
+          </td>
+          <td>{{this.neighbourhood}}</td>
+          <td>{{this.room_type}}</td>
+          <td>{{formatPrice this.price}}</td>
+          <td>
+            <a href="/allData/invoiceID/{{@index}}" class="view-link">View Details</a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  
+  {{!-- Pagination --}}
+  {{#if totalPages}}
+    <div class="pagination">
+      {{#if hasPrevPage}}
+        <a href="/allData?page={{prevPage}}" class="page-link">⬅ Previous</a>
+      {{/if}}
+      <span>Page {{currentPage}} of {{totalPages}}</span>
+      {{#if hasNextPage}}
+        <a href="/allData?page={{nextPage}}" class="page-link">Next ➡</a>
+      {{/if}}
+    </div>
+  {{/if}}
+{{else}}
+  <p>{{message}}</p>
+{{/if}}

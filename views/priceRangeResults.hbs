@@ -1,0 +1,54 @@
+<h2>{{title}}</h2>
+<p>Showing listings with price between <strong>${{minPrice}}</strong> and <strong>${{maxPrice}}</strong></p>
+<p>Total results found: <strong>{{totalResults}}</strong></p>
+
+{{#if results.length}}
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Thumbnail</th>
+        <th>Name</th>
+        <th>Neighbourhood</th>
+        <th>Room Type</th>
+        <th>Price</th>
+        <th>Host Name</th>
+        <th>Property Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each results}}
+        {{!-- ✅ Step 11: Filter records using template - only show if price is in range --}}
+        {{#if this.price}}
+          {{#if (priceInRange this.price ../minPrice ../maxPrice)}}
+            <tr {{#if (isEmptyName this.name)}}class="empty-name-row"{{/if}}>
+              <td>{{@index}}</td>
+              <td>
+                {{#if this.thumbnail}}
+                  <img src="{{this.thumbnail}}" alt="{{this.name}}" width="100" height="75" style="border-radius:6px;">
+                {{else}}
+                  <img src="/images/default.png" alt="No Image" width="100" height="75" style="border-radius:6px;">
+                {{/if}}
+              </td>
+              <td {{#if (isEmptyName this.name)}}class="empty-name-cell"{{/if}}>
+                {{displayName this.name}}
+              </td>
+              <td>{{this.neighbourhood}}</td>
+              <td>{{this.room_type}}</td>
+              <td><strong>{{formatPrice this.price}}</strong></td>
+              <td>{{this.host_name}}</td>
+              <td>{{this.property_type}}</td>
+            </tr>
+          {{/if}}
+        {{/if}}
+      {{/each}}
+    </tbody>
+  </table>
+{{else}}
+  <p class="no-results">No listings found in the price range ${{minPrice}} - ${{maxPrice}}.</p>
+{{/if}}
+
+<div style="margin-top: 20px;">
+  <a href="/viewData/price" class="back-link">← New Search</a>
+  <a href="/" class="back-link">Home</a>
+</div>

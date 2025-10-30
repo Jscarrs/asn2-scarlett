@@ -1,0 +1,18 @@
+<h2>{{title}}</h2>
+
+{{#if record}}
+  <div class="record-detail">
+    <img src="/images/default.png" alt="{{record.name}}" width="300">
+
+    <h3>{{record.name}}</h3>
+    <p><strong>Property ID:</strong> {{record.id}}</p>
+    <p><strong>Neighbourhood:</strong> {{record.neighbourhood}}</p>
+    <p><strong>Room Type:</strong> {{record.room_type}}</p>
+    <p><strong>Price:</strong> ${{record.price}}</p>
+    <p><strong>Minimum Nights:</strong> {{record.minimum_nights}}</p>
+  </div>
+
+  <a href="/allData">⬅ Back to All Data</a>
+{{else}}
+  <p>No record found.</p>
+{{/if}}

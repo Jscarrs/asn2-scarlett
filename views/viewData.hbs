@@ -1,0 +1,48 @@
+
+<div class="content">
+  <h2>{{title}}</h2>
+  <p>Showing up to 100 Airbnb listings with detailed information</p>
+  
+  {{#if data.length}}
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Thumbnail</th>
+          <th>Name</th>
+          <th>Neighbourhood</th>
+          <th>Room Type</th>
+          <th>Price</th>
+          <th>Host Name</th>
+          <th>Reviews / Month</th>
+          <th>Instant Bookable</th>
+          <th>Property Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data}}
+          <tr>
+            <td>{{@index}}</td>
+            <td>
+              {{#if this.thumbnail}}
+                <img src="{{this.thumbnail}}" alt="{{this.name}}" width="120" onerror="this.src='/images/default.png'">
+              {{else}}
+                <em>No image</em>
+              {{/if}}
+            </td>
+            <td>{{#if this.name}}{{this.name}}{{else}}<em style="color: #999;">Unnamed</em>{{/if}}</td>
+            <td>{{this.neighbourhood}}</td>
+            <td>{{this.room_type}}</td>
+            <td>{{formatPrice this.price}}</td>
+            <td><strong>{{this.host_name}}</strong></td>
+            <td>{{this.reviews_per_month}}</td>
+            <td>{{#if this.instant_bookable}}Yes{{else}}No{{/if}}</td>
+            <td>{{this.property_type}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <p>No data found.</p>
+  {{/if}}
+</div>

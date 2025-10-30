@@ -1,0 +1,17 @@
+{
+  "name": "asn2-scarlett",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Scarlett Jet",
+  "license": "ISC",
+  "dependencies": {
+    "csv-parse": "^6.1.0",
+    "express": "^5.1.0",
+    "express-handlebars": "^8.0.3"
+  }
+}
